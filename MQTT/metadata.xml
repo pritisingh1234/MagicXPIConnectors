@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<AddOnAdaptorSettings>
+
+  <Name>MQTT</Name>
+
+  <Description>Simple MQTT Step  - Register on a list of topics and invokes a flow</Description>
+
+  <Version>1.0</Version>
+
+  <MinXpiVersion>04.5000</MinXpiVersion>
+
+  <Icon>mqttifc.gif</Icon>
+
+  <Group>Connectors</Group>
+
+  <DefaultInterface>1</DefaultInterface>
+
+  <EncryptionKey>N3DVL1B8N3DVL1N3DVL1B8N3343ffhyugdfFHFRFEE33xcVTYTVL1B8</EncryptionKey>
+
+  <LicenseFeature>MQTT</LicenseFeature>
+
+  <StepDefinitions>
+    <UIType>D</UIType>
+    <UIImplementationClass>MagicSoftware.MQTT.Step.MQTTStepConfiguration                                                                                                                                                                                                                       </UIImplementationClass>
+    <Resource>true</Resource>
+    <ConfigRequiresResServ>true</ConfigRequiresResServ>
+    <RuntimeTechnologyType>1</RuntimeTechnologyType>
+    <RuntimeImplementationClass>com.magicsoftware.sdk.mqttConnector.step.MQTTstepAdaptor</RuntimeImplementationClass>
+    <RuntimeRequiresResServ>true</RuntimeRequiresResServ>
+    <DAMInterfaceSupported>false</DAMInterfaceSupported>
+    <DataMapperInterfaceSupported>false</DataMapperInterfaceSupported>
+    <MethodConfigTechnology>1</MethodConfigTechnology>
+    <JavaClassName/>
+    <JavaMethods/>
+  </StepDefinitions>
+
+  <TriggerDefinitions>
+    <UIType>D</UIType>
+    <Service>true</Service>
+    <UIImplementationClass>MagicSoftware.MQTT.Trigger.MQTTTriggerConfiguration</UIImplementationClass>
+    <ConfigRequiresResServ>true</ConfigRequiresResServ>
+    <RuntimeTechnologyType>1</RuntimeTechnologyType>
+    <RuntimeImplementationClass>com.magicsoftware.sdk.mqttConnector.trigger.MQTTtriggeradaptor</RuntimeImplementationClass>
+    <RuntimeRequiresResServ>true</RuntimeRequiresResServ>
+    <TriggerInvocationType>E</TriggerInvocationType>
+    <FlowInvocationBehavior>2</FlowInvocationBehavior>
+  </TriggerDefinitions>
+
+  <ResourceDefinition>
+    <RS_Type_Name>MQTT</RS_Type_Name>
+    <RS_Type_Description>MQTT Resource definitions</RS_Type_Description>
+    <RS_Validation_Helper>True</RS_Validation_Helper>
+    <Property>
+      <ID>1</ID>
+      <Name>Broker URLs</Name>
+      <Type>A</Type>
+      <Picture>1000</Picture>
+      <ReadOnly>0</ReadOnly>
+      <Mandatory>1</Mandatory>
+      <TooltipDescription>A comma delimited list of broker URLs, expressed as follows: &lt;protocol&gt;://&lt;host&gt;:&lt;port&gt;</TooltipDescription>
+      <ValueSelectionType>EA</ValueSelectionType>
+      <LogicalNameSupport>1</LogicalNameSupport>
+      <ItemList/>
+      <DisplayList/>
+      <LinkedParameterID>0</LinkedParameterID>
+      <encrypted>0</encrypted>
+      <DefaultValue/>
+      <Visibility>0</Visibility>
+      <DependentParameterID>0</DependentParameterID>
+      <DependentParameterValues/>
+      <DisplaySequenceID>1</DisplaySequenceID>
+    </Property>
+    <Property>
+      <ID>2</ID>
+      <Name>Clean Session</Name>
+      <Type>L</Type>
+      <Picture>1</Picture>
+      <ReadOnly>0</ReadOnly>
+      <Mandatory>1</Mandatory>
+      <TooltipDescription>Determines the client's behavior if it is disconnected from the broker for any reason.</TooltipDescription>
+      <ValueSelectionType>Combo</ValueSelectionType>
+      <LogicalNameSupport>0</LogicalNameSupport>
+      <ItemList>'FALSE'LOG,'TRUE'LOG</ItemList>
+      <DisplayList>No,Yes</DisplayList>
+      <LinkedParameterID>0</LinkedParameterID>
+      <encrypted>0</encrypted>
+      <DefaultValue>'TRUE'LOG</DefaultValue>
+      <Visibility>0</Visibility>
+      <DependentParameterID>0</DependentParameterID>
+      <DependentParameterValues/>
+      <DisplaySequenceID>2</DisplaySequenceID>
+    </Property>
+    <Property>
+      <ID>3</ID>
+      <Name>User Name</Name>
+      <Type>A</Type>
+      <Picture>100</Picture>
+      <ReadOnly>0</ReadOnly>
+      <Mandatory>0</Mandatory>
+      <TooltipDescription>The user name for broker authentication.</TooltipDescription>
+      <ValueSelectionType>EA</ValueSelectionType>
+      <LogicalNameSupport>1</LogicalNameSupport>
+      <ItemList/>
+      <DisplayList/>
+      <LinkedParameterID>0</LinkedParameterID>
+      <encrypted>0</encrypted>
+      <DefaultValue/>
+      <Visibility>0</Visibility>
+      <DependentParameterID>0</DependentParameterID>
+      <DependentParameterValues/>
+      <DisplaySequenceID>3</DisplaySequenceID>
+    </Property>
+    <Property>
+      <ID>4</ID>
+      <Name>Password</Name>
+      <Type>A</Type>
+      <Picture>100</Picture>
+      <ReadOnly>0</ReadOnly>
+      <Mandatory>0</Mandatory>
+      <TooltipDescription>The password for broker authentication.</TooltipDescription>
+      <ValueSelectionType>EA</ValueSelectionType>
+      <LogicalNameSupport>1</LogicalNameSupport>
+      <ItemList/>
+      <DisplayList/>
+      <LinkedParameterID>0</LinkedParameterID>
+      <encrypted>1</encrypted>
+      <DefaultValue/>
+      <Visibility>0</Visibility>
+      <DependentParameterID>0</DependentParameterID>
+      <DependentParameterValues/>
+      <DisplaySequenceID>4</DisplaySequenceID>
+    </Property>
+    <Property>
+      <ID>5</ID>
+      <Name>Use LWT</Name>
+      <Type>L</Type>
+      <Picture>1</Picture>
+      <ReadOnly>0</ReadOnly>
+      <Mandatory>1</Mandatory>
+      <TooltipDescription>Enables the "last will and testament" functionality. If the client is disconnected from the broker, the broker will publish a message to itself using the supplied LWT details.</TooltipDescription>
+      <ValueSelectionType>Combo</ValueSelectionType>
+      <LogicalNameSupport>0</LogicalNameSupport>
+      <ItemList>'FALSE'LOG,'TRUE'LOG</ItemList>
+      <DisplayList>No,Yes</DisplayList>
+      <LinkedParameterID>0</LinkedParameterID>
+      <encrypted>0</encrypted>
+      <DefaultValue>'FALSE'LOG</DefaultValue>
+      <Visibility>0</Visibility>
+      <DependentParameterID>0</DependentParameterID>
+      <DependentParameterValues/>
+      <DisplaySequenceID>5</DisplaySequenceID>
+    </Property>
+    <Property>
+      <ID>6</ID>
+      <Name>LWT Topic</Name>
+      <Type>A</Type>
+      <Picture>100</Picture>
+      <ReadOnly>0</ReadOnly>
+      <Mandatory>1</Mandatory>
+      <TooltipDescription>The topic that you want to publish.</TooltipDescription>
+      <ValueSelectionType>EA</ValueSelectionType>
+      <LogicalNameSupport>1</LogicalNameSupport>
+      <ItemList/>
+      <DisplayList/>
+      <LinkedParameterID>0</LinkedParameterID>
+      <encrypted>0</encrypted>
+      <DefaultValue/>
+      <Visibility>2</Visibility>
+      <DependentParameterID>5</DependentParameterID>
+      <DependentParameterValues>'TRUE'LOG</DependentParameterValues>
+      <DisplaySequenceID>6</DisplaySequenceID>
+    </Property>
+    <Property>
+      <ID>7</ID>
+      <Name>LWT Message</Name>
+      <Type>A</Type>
+      <Picture>3200</Picture>
+      <ReadOnly>0</ReadOnly>
+      <Mandatory>1</Mandatory>
+      <TooltipDescription>The message that you want to send to the topic.</TooltipDescription>
+      <ValueSelectionType>EA</ValueSelectionType>
+      <LogicalNameSupport>1</LogicalNameSupport>
+      <ItemList/>
+      <DisplayList/>
+      <LinkedParameterID>0</LinkedParameterID>
+      <encrypted>0</encrypted>
+      <DefaultValue/>
+      <Visibility>2</Visibility>
+      <DependentParameterID>5</DependentParameterID>
+      <DependentParameterValues>'TRUE'LOG</DependentParameterValues>
+      <DisplaySequenceID>7</DisplaySequenceID>
+    </Property>
+    <Property>
+      <ID>8</ID>
+      <Name>LWT QoS</Name>
+      <Type>N</Type>
+      <Picture>1.0</Picture>
+      <ReadOnly>0</ReadOnly>
+      <Mandatory>1</Mandatory>
+      <TooltipDescription>The Quality of Service when sending the message.</TooltipDescription>
+      <ValueSelectionType>Combo</ValueSelectionType>
+      <LogicalNameSupport>0</LogicalNameSupport>
+      <ItemList>0,1,2</ItemList>
+      <DisplayList>0,1,2</DisplayList>
+      <LinkedParameterID>0</LinkedParameterID>
+      <encrypted>0</encrypted>
+      <DefaultValue>0</DefaultValue>
+      <Visibility>2</Visibility>
+      <DependentParameterID>5</DependentParameterID>
+      <DependentParameterValues>'TRUE'LOG</DependentParameterValues>
+      <DisplaySequenceID>8</DisplaySequenceID>
+    </Property>
+    <Property>
+      <ID>9</ID>
+      <Name>LWS Retained</Name>
+      <Type>L</Type>
+      <Picture>1</Picture>
+      <ReadOnly>0</ReadOnly>
+      <Mandatory>1</Mandatory>
+      <TooltipDescription>The message retain value. This determines whether the broker will hold onto a message after it has been sent.</TooltipDescription>
+      <ValueSelectionType>Combo</ValueSelectionType>
+      <LogicalNameSupport>0</LogicalNameSupport>
+      <ItemList>'FALSE'LOG,'TRUE'LOG</ItemList>
+      <DisplayList>No,Yes</DisplayList>
+      <LinkedParameterID>0</LinkedParameterID>
+      <encrypted>0</encrypted>
+      <DefaultValue>'FALSE'LOG</DefaultValue>
+      <Visibility>2</Visibility>
+      <DependentParameterID>5</DependentParameterID>
+      <DependentParameterValues>'TRUE'LOG</DependentParameterValues>
+      <DisplaySequenceID>9</DisplaySequenceID>
+    </Property>
+    <Property>
+      <ID>10</ID>
+      <Name>MQTT Connection Timeout</Name>
+      <Type>N</Type>
+      <Picture>6.0</Picture>
+      <ReadOnly>0</ReadOnly>
+      <Mandatory>0</Mandatory>
+      <TooltipDescription>The connection timeout in seconds when connecting to the broker.</TooltipDescription>
+      <ValueSelectionType>EA</ValueSelectionType>
+      <LogicalNameSupport>1</LogicalNameSupport>
+      <ItemList/>
+      <DisplayList/>
+      <LinkedParameterID>0</LinkedParameterID>
+      <encrypted>0</encrypted>
+      <DefaultValue>30</DefaultValue>
+      <Visibility>0</Visibility>
+      <DependentParameterID>0</DependentParameterID>
+      <DependentParameterValues/>
+      <DisplaySequenceID>10</DisplaySequenceID>
+    </Property>
+    <Property>
+      <ID>11</ID>
+      <Name>MQTT Keep Alive Interval</Name>
+      <Type>N</Type>
+      <Picture>6.0</Picture>
+      <ReadOnly>0</ReadOnly>
+      <Mandatory>0</Mandatory>
+      <TooltipDescription>The connection keep alive interval in seconds. This lets the client detect if the broker is no longer available without having to wait for the TCP/IP timeout.</TooltipDescription>
+      <ValueSelectionType>EA</ValueSelectionType>
+      <LogicalNameSupport>1</LogicalNameSupport>
+      <ItemList/>
+      <DisplayList/>
+      <LinkedParameterID>0</LinkedParameterID>
+      <encrypted>0</encrypted>
+      <DefaultValue>0</DefaultValue>
+      <Visibility>0</Visibility>
+      <DependentParameterID>0</DependentParameterID>
+      <DependentParameterValues/>
+      <DisplaySequenceID>11</DisplaySequenceID>
+    </Property>
+    <Property>
+      <ID>12</ID>
+      <Name>MQTT Publish Timeout</Name>
+      <Type>N</Type>
+      <Picture>6.0</Picture>
+      <ReadOnly>0</ReadOnly>
+      <Mandatory>0</Mandatory>
+      <TooltipDescription>The publish timeout in milliseconds.</TooltipDescription>
+      <ValueSelectionType>EA</ValueSelectionType>
+      <LogicalNameSupport>1</LogicalNameSupport>
+      <ItemList/>
+      <DisplayList/>
+      <LinkedParameterID>0</LinkedParameterID>
+      <encrypted>0</encrypted>
+      <DefaultValue>0</DefaultValue>
+      <Visibility>0</Visibility>
+      <DependentParameterID>0</DependentParameterID>
+      <DependentParameterValues/>
+      <DisplaySequenceID>12</DisplaySequenceID>
+    </Property>
+    <Property>
+      <ID>13</ID>
+      <Name>Server Certificate File</Name>
+      <Type>A</Type>
+      <Picture>260</Picture>
+      <ReadOnly>0</ReadOnly>
+      <Mandatory>0</Mandatory>
+      <TooltipDescription>When the Broker URLs property (above) is set to SSL, this property should hold the path to the broker certificate (in PEM format). The MQTT connector will use the server certificate to determine whether it can trust the broker.</TooltipDescription>
+      <ValueSelectionType>EA</ValueSelectionType>
+      <LogicalNameSupport>1</LogicalNameSupport>
+      <ItemList/>
+      <DisplayList/>
+      <LinkedParameterID>0</LinkedParameterID>
+      <encrypted>0</encrypted>
+      <DefaultValue/>
+      <Visibility>0</Visibility>
+      <DependentParameterID>0</DependentParameterID>
+      <DependentParameterValues/>
+      <DisplaySequenceID>13</DisplaySequenceID>
+    </Property>
+    <Property>
+      <ID>14</ID>
+      <Name>Security Protocol</Name>
+      <Type>A</Type>
+      <Picture>10</Picture>
+      <ReadOnly>0</ReadOnly>
+      <Mandatory>1</Mandatory>
+      <TooltipDescription>The security protocol to use when the Broker URLs parameter (above) is set to SSL.</TooltipDescription>
+      <ValueSelectionType>Combo</ValueSelectionType>
+      <LogicalNameSupport>0</LogicalNameSupport>
+      <ItemList>TLSv1.2,TLSV1.1,TLSV1</ItemList>
+      <DisplayList>TLSv1.2,TLSV1.1,TLSV1</DisplayList>
+      <LinkedParameterID>0</LinkedParameterID>
+      <encrypted>0</encrypted>
+      <DefaultValue>TLSv1.2</DefaultValue>
+      <Visibility>0</Visibility>
+      <DependentParameterID>0</DependentParameterID>
+      <DependentParameterValues/>
+      <DisplaySequenceID>14</DisplaySequenceID>
+    </Property>
+    <Property>
+      <ID>15</ID>
+      <Name>Client Certificate File</Name>
+      <Type>A</Type>
+      <Picture>260</Picture>
+      <ReadOnly>0</ReadOnly>
+      <Mandatory>0</Mandatory>
+      <TooltipDescription>When the Broker URLs property (above) is set to SSL, and mutual authentication is required, this property should hold the path to the client certificate and the private key archive (in PKCS #12 format).</TooltipDescription>
+      <ValueSelectionType>EA</ValueSelectionType>
+      <LogicalNameSupport>1</LogicalNameSupport>
+      <ItemList/>
+      <DisplayList/>
+      <LinkedParameterID>0</LinkedParameterID>
+      <encrypted>0</encrypted>
+      <DefaultValue/>
+      <Visibility>0</Visibility>
+      <DependentParameterID>0</DependentParameterID>
+      <DependentParameterValues/>
+      <DisplaySequenceID>15</DisplaySequenceID>
+    </Property>
+    <Property>
+      <ID>16</ID>
+      <Name>Client Certificate Password</Name>
+      <Type>A</Type>
+      <Picture>260</Picture>
+      <ReadOnly>0</ReadOnly>
+      <Mandatory>0</Mandatory>
+      <TooltipDescription>The password for the client certificate.</TooltipDescription>
+      <ValueSelectionType>EA</ValueSelectionType>
+      <LogicalNameSupport>1</LogicalNameSupport>
+      <ItemList/>
+      <DisplayList/>
+      <LinkedParameterID>0</LinkedParameterID>
+      <encrypted>1</encrypted>
+      <DefaultValue/>
+      <Visibility>0</Visibility>
+      <DependentParameterID>0</DependentParameterID>
+      <DependentParameterValues/>
+      <DisplaySequenceID>16</DisplaySequenceID>
+    </Property>
+  </ResourceDefinition>
+
+  <ServiceDefinition>
+    <RS_Type_Name>MQTT</RS_Type_Name>
+    <RS_Type_Description>MQTT service definitions</RS_Type_Description>
+    <RS_Validation_Helper>False</RS_Validation_Helper>
+    <Property>
+      <ID>1</ID>
+      <Name>MQTT Resource</Name>
+      <Type>R</Type>
+      <Picture/>
+      <ReadOnly>0</ReadOnly>
+      <Mandatory>1</Mandatory>
+      <TooltipDescription>Select an MQTT resource from the drop-down list.</TooltipDescription>
+      <ValueSelectionType>Combo</ValueSelectionType>
+      <LogicalNameSupport>0</LogicalNameSupport>
+      <ItemList/>
+      <DisplayList/>
+      <LinkedParameterID>0</LinkedParameterID>
+      <encrypted>0</encrypted>
+      <DefaultValue/>
+      <Visibility>0</Visibility>
+      <DependentParameterID>0</DependentParameterID>
+      <DependentParameterValues/>
+      <DisplaySequenceID>1</DisplaySequenceID>
+    </Property>
+    <Property>
+      <ID>2</ID>
+      <Name>Client ID</Name>
+      <Type>A</Type>
+      <Picture>100</Picture>
+      <ReadOnly>1</ReadOnly>
+      <Mandatory>1</Mandatory>
+      <TooltipDescription>The client ID is used by the server to store data related to the client, so it must remain the same when connecting to a server if durable subscriptions or reliable messaging are required.</TooltipDescription>
+      <ValueSelectionType>EA</ValueSelectionType>
+      <LogicalNameSupport>0</LogicalNameSupport>
+      <ItemList/>
+      <DisplayList/>
+      <LinkedParameterID>0</LinkedParameterID>
+      <encrypted>0</encrypted>
+      <DefaultValue/>
+      <Visibility>0</Visibility>
+      <DependentParameterID>0</DependentParameterID>
+      <DependentParameterValues/>
+      <DisplaySequenceID>2</DisplaySequenceID>
+    </Property>
+    <RS_HELP>
+      <HelpID>2</HelpID>
+      <HelpName>Generate ID</HelpName>
+      <ClassName/>
+    </RS_HELP>
+  </ServiceDefinition>
+
+  <Struct_ErrorsList>
+    <ErrorsListComp>
+      <ErrorCode>8888</ErrorCode>
+      <ErrorDescription>.Net Exception</ErrorDescription>
+      <JavaExceptionMessage></JavaExceptionMessage>
+    </ErrorsListComp>
+    <ErrorsListComp>
+      <ErrorCode>9999</ErrorCode>
+      <ErrorDescription>Java Exception</ErrorDescription>
+      <JavaExceptionMessage></JavaExceptionMessage>
+    </ErrorsListComp>
+    <ErrorsListComp>
+      <ErrorCode>100</ErrorCode>
+      <ErrorDescription>MQTT connection Secutiry exception</ErrorDescription>
+      <JavaExceptionMessage>MQTT connection Secutiry exception</JavaExceptionMessage>
+    </ErrorsListComp>
+    <ErrorsListComp>
+      <ErrorCode>101</ErrorCode>
+      <ErrorDescription>MQTT connection Exception</ErrorDescription>
+      <JavaExceptionMessage>MQTT connection Exception</JavaExceptionMessage>
+    </ErrorsListComp>
+    <ErrorsListComp>
+      <ErrorCode>102</ErrorCode>
+      <ErrorDescription>MQTT publish - connection security exception</ErrorDescription>
+      <JavaExceptionMessage>MQTT publish - connection security exception</JavaExceptionMessage>
+    </ErrorsListComp>
+    <ErrorsListComp>
+      <ErrorCode>103</ErrorCode>
+      <ErrorDescription>MQTT subscribe - connection security exception</ErrorDescription>
+      <JavaExceptionMessage>MQTT subscribe - connection security exception</JavaExceptionMessage>
+    </ErrorsListComp>
+    <ErrorsListComp>
+      <ErrorCode>104</ErrorCode>
+      <ErrorDescription>MQTT: Invalid Service parameters</ErrorDescription>
+      <JavaExceptionMessage>MQTT: Invalid Service parameters</JavaExceptionMessage>
+    </ErrorsListComp>
+    <ErrorsListComp>
+      <ErrorCode>105</ErrorCode>
+      <ErrorDescription>MQTT: Service is not available</ErrorDescription>
+      <JavaExceptionMessage>MQTT: Service is not available</JavaExceptionMessage>
+    </ErrorsListComp>
+    <ErrorsListComp>
+      <ErrorCode>106</ErrorCode>
+      <ErrorDescription>MQTT Persistence Exception</ErrorDescription>
+      <JavaExceptionMessage>MQTT Persistence Exception</JavaExceptionMessage>
+    </ErrorsListComp>
+    <ErrorsListComp>
+      <ErrorCode>107</ErrorCode>
+      <ErrorDescription>MQTT Exception</ErrorDescription>
+      <JavaExceptionMessage>MQTT Exception</JavaExceptionMessage>
+    </ErrorsListComp>
+  </Struct_ErrorsList>
+
+</AddOnAdaptorSettings>

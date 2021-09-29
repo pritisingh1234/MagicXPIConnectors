@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 (http://www.altova.com) by MSE (private) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.magicsoftware.com/edm" targetNamespace="http://schemas.magicsoftware.com/edm" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xs:simpleType name="None">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <xs:simpleType name="Binary">
+    <xs:restriction base="xs:hexBinary"/>
+  </xs:simpleType>
+  <xs:simpleType name="Boolean">
+    <xs:restriction base="xs:boolean"/>
+  </xs:simpleType>
+  <xs:simpleType name="Byte">
+    <xs:restriction base="xs:byte"/>
+  </xs:simpleType>
+  <xs:simpleType name="DateTimeOffset">
+    <xs:restriction base="xs:dateTime"/>
+  </xs:simpleType>
+  <xs:simpleType name="Decimal">
+    <xs:restriction base="xs:decimal"/>
+  </xs:simpleType>
+  <xs:simpleType name="Double">
+    <xs:restriction base="xs:double"/>
+  </xs:simpleType>
+  <xs:simpleType name="Guid">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <xs:simpleType name="Int16">
+    <xs:restriction base="xs:short"/>
+  </xs:simpleType>
+  <xs:simpleType name="Int32">
+    <xs:restriction base="xs:int"/>
+  </xs:simpleType>
+  <xs:simpleType name="Int64">
+    <xs:restriction base="xs:long"/>
+  </xs:simpleType>
+  <xs:simpleType name="SByte">
+    <xs:restriction base="xs:byte"/>
+  </xs:simpleType>
+  <xs:simpleType name="Single">
+    <xs:restriction base="xs:float"/>
+  </xs:simpleType>
+  <xs:simpleType name="String">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <xs:simpleType name="Stream">
+    <xs:restriction base="xs:anyURI"/>
+  </xs:simpleType>
+  <xs:simpleType name="Duration">
+    <xs:restriction base="xs:duration"/>
+  </xs:simpleType>
+  <xs:simpleType name="Date">
+    <xs:restriction base="xs:date"/>
+  </xs:simpleType>
+  <xs:simpleType name="TimeOfDay">
+    <xs:restriction base="xs:time"/>
+  </xs:simpleType>
+  <!-- Geo... types -->
+  <xs:complexType name="Geography">
+    <xs:complexContent>
+      <xs:extension base="AnyGeography"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SRID" type="xs:unsignedInt"/>
+  <xs:complexType name="Point">
+    <xs:sequence>
+      <xs:element ref="SRID"/>
+      <xs:element name="x" type="xs:double"/>
+      <xs:element name="y" type="xs:double"/>
+      <xs:element name="z" type="xs:double"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GeographyPoint">
+    <xs:sequence>
+      <xs:element name="Point" type="Point"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GeographyLineString">
+    <xs:sequence>
+      <xs:element name="LineString" type="Points"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GeographyPolygon">
+    <xs:sequence>
+      <xs:element name="Polygon" type="Polygon"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GeographyCollection">
+    <xs:sequence>
+      <xs:element ref="SRID"/>
+      <xs:element name="Geographies" type="Geography" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GeographyMultiPolygon">
+    <xs:sequence>
+      <xs:element name="MultiPolygon" type="Polygons"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GeographyMultiLineString">
+    <xs:sequence>
+      <xs:element name="MultiLineString" type="LineStrings"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GeographyMultiPoint">
+    <xs:sequence>
+      <xs:element name="MultiPoint">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element ref="SRID"/>
+            <xs:element name="Point" type="Point" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Geometry">
+    <xs:complexContent>
+      <xs:extension base="AnyGeography"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="GeometryPoint">
+    <xs:complexContent>
+      <xs:extension base="GeographyPoint"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="GeometryLineString">
+    <xs:complexContent>
+      <xs:extension base="GeographyLineString"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="GeometryPolygon">
+    <xs:complexContent>
+      <xs:extension base="GeographyPolygon"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="GeometryCollection">
+    <xs:complexContent>
+      <xs:extension base="GeographyCollection"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="GeometryMultiPolygon">
+    <xs:complexContent>
+      <xs:extension base="GeographyMultiPolygon"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="GeometryMultiLineString">
+    <xs:complexContent>
+      <xs:extension base="GeographyMultiLineString"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="GeometryMultiPoint">
+    <xs:complexContent>
+      <xs:extension base="GeographyMultiPoint"/>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="AnyGeography">
+    <xs:choice>
+      <xs:element name="As_Point" type="GeographyPoint"/>
+      <xs:element name="As_MultiPoint" type="GeographyMultiPoint"/>
+      <xs:element name="As_LineString" type="GeographyLineString"/>
+      <xs:element name="As_MultiLineString" type="GeographyMultiLineString"/>
+      <xs:element name="As_Polygon" type="GeographyPolygon"/>
+      <xs:element name="As_MultiPolygon" type="GeographyMultiPolygon"/>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="Points">
+    <xs:sequence>
+      <xs:element ref="SRID"/>
+      <xs:element name="Point" type="Point" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LineStrings">
+    <xs:sequence>
+      <xs:element ref="SRID"/>
+      <xs:element name="LineString" type="Points" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Polygon">
+    <xs:sequence>
+      <xs:element ref="SRID"/>
+      <xs:element name="Interior" type="Points"/>
+      <xs:element name="Exterior" type="Points"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="Polygons">
+    <xs:sequence>
+      <xs:element ref="SRID"/>
+      <xs:element name="Polygon" type="Polygon" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

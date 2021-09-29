@@ -1,0 +1,197 @@
+﻿<Window
+    x:Class="MagicSoftware.MQTT.Step.MQTTStepView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:helpers="clr-namespace:MagicSoftware.MQTT.Helpers"
+    xmlns:local="clr-namespace:MagicSoftware.MQTT"
+    xmlns:step="clr-namespace:MagicSoftware.MQTT.Step"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    Title="{x:Static local:MQTTResourceManager.StepWindowTitle}"
+    Width="500"
+    Height="350"
+    ResizeMode="NoResize"
+    WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MQTT;component/Themes/Generic.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <step:MQTTRetainedConverter x:Key="retainedConverter" />
+            <step:MQTTStoreResultInConverter x:Key="storeResultInConverter" />
+            <step:MQTTOperationSuccessConverter x:Key="operationSuccessConverter" />
+
+            <ObjectDataProvider
+                x:Key="qosEnum"
+                MethodName="GetDisplayNames"
+                ObjectType="{x:Type helpers:EnumHelper}">
+                <ObjectDataProvider.MethodParameters>
+                    <x:TypeExtension TypeName="local:QosEnum" />
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
+
+            <ObjectDataProvider
+                x:Key="retainedEnum"
+                MethodName="GetValues"
+                ObjectType="{x:Type sys:Enum}">
+                <ObjectDataProvider.MethodParameters>
+                    <x:TypeExtension TypeName="step:RetainedEnum" />
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
+
+            <ObjectDataProvider
+                x:Key="operationSuccessEnum"
+                MethodName="GetValues"
+                ObjectType="{x:Type sys:Enum}">
+                <ObjectDataProvider.MethodParameters>
+                    <x:TypeExtension TypeName="step:OperationSuccessEnum" />
+                </ObjectDataProvider.MethodParameters>
+            </ObjectDataProvider>
+
+            <DataTemplate DataType="{x:Type step:ResultVariableFieldViewModel}">
+                <StackPanel Orientation="Horizontal">
+                    <Button  Name="btnStoreResultIn"
+                        Command="{x:Static local:Commands.PromptCommand}"
+                        CommandParameter="result"
+                        Style="{StaticResource FieldButtonStyle}">
+                        ...
+                    </Button>
+                    <TextBlock Name="txtStoreResultIn" Margin="2,0,0,0" Text="{Binding FieldVariable}" />
+                </StackPanel>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type step:OperationSuccessVariableFieldViewModel}">
+                <StackPanel Orientation="Horizontal">
+                    <Button Name="btnOpertationSuccess"
+                        Command="{x:Static local:Commands.PromptCommand}"
+                        CommandParameter="operationSuccess"
+                        Style="{StaticResource FieldButtonStyle}">
+                        ...
+                    </Button>
+                    <TextBlock Name="txtOpertationSuccess" Margin="2,0,0,0" Text="{Binding FieldVariable}" />
+                </StackPanel>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type step:ResultFileFieldViewModel}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBox
+                        Name="txbStoreResIn"
+                        Width="180"
+                        DockPanel.Dock="Left"
+                        MaxLines="1"
+                        Text="{Binding FilePath}" />
+                    <Button Name="btnStoreResInFx"
+                        Margin="2,0,0,0"
+                        Command="{x:Static local:Commands.EditExpressionCommand}"
+                        CommandParameter="result"
+                        Content="Fx"
+                        Style="{StaticResource FieldButtonStyle}" />
+                    <Button Name="btnStoreResInFd"
+                        Margin="2,0,0,0"
+                        Command="{x:Static local:Commands.PromptCommand}"
+                        CommandParameter="result"
+                        Content="FD"
+                        Style="{StaticResource FieldButtonStyle}" />
+                </StackPanel>
+            </DataTemplate>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <DockPanel>
+        <StackPanel
+            HorizontalAlignment="Right"
+            DockPanel.Dock="Bottom"
+            Orientation="Horizontal">
+            <Button
+                Name="OK"
+                Margin="2"
+                Click="OK_Click"
+                Content="{x:Static local:MQTTResourceManager.OK}"
+                Style="{StaticResource DialogButtonStyle}"
+                Visibility="{Binding IsDesign}" />
+            <Button
+                Name="Cancel"
+                Margin="2"
+                Click="Cancel_Click"
+                Content="{x:Static local:MQTTResourceManager.Cancel}"
+                Style="{StaticResource DialogButtonStyle}" />
+        </StackPanel>
+
+        <StackPanel Margin="5">
+
+            <GroupBox Header="{x:Static local:MQTTResourceManager.HdrConnection}">
+                <StackPanel>
+                    <HeaderedContentControl Header="{x:Static local:MQTTResourceManager.LblResourceName}">
+                        <StackPanel>
+                            <TextBlock Text="{Binding ResourceName}" />
+                        </StackPanel>
+                    </HeaderedContentControl>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Header="{x:Static local:MQTTResourceManager.HdrPublishSettings}">
+                <StackPanel>
+                    <HeaderedContentControl Header="{x:Static local:MQTTResourceManager.LblQoS}">
+                        <ComboBox
+                            Name="cmbQos" Width="70"
+                            DisplayMemberPath="Item1"
+                            ItemsSource="{Binding Source={StaticResource qosEnum}}"
+                            SelectedValue="{Binding QoS}"
+                            SelectedValuePath="Item2" />
+                    </HeaderedContentControl>
+                    <HeaderedContentControl Header="{x:Static local:MQTTResourceManager.LblRetained}">
+                        <ComboBox
+                            Name="cmbRetained" Width="70"
+                            ItemsSource="{Binding Source={StaticResource retainedEnum}}"
+                            SelectedItem="{Binding Retained}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Converter={StaticResource retainedConverter}}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </HeaderedContentControl>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox Header="{x:Static local:MQTTResourceManager.HdrResultOptions}">
+                <StackPanel>
+                    <HeaderedContentControl Header="{x:Static local:MQTTResourceManager.LblStoreResultIn}">
+                        <StackPanel Orientation="Horizontal">
+                            <ComboBox
+                                Name="cmbStoreResultIn" Width="75"
+                                ItemsSource="{Binding StoreResultFieldTypes}"
+                                SelectedValue="{Binding ResultStorage}"
+                                SelectedValuePath="Value">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Converter={StaticResource storeResultInConverter}}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <ContentControl Name="contentStoreResultIn" Content="{Binding ResultStorage}" />
+                        </StackPanel>
+                    </HeaderedContentControl>
+
+                    <HeaderedContentControl Header="{x:Static local:MQTTResourceManager.LblOperationSuccess}">
+                        <StackPanel Orientation="Horizontal">
+                            <ComboBox
+                                Name="cmbOpertationSuccess" Width="75"
+                                ItemsSource="{Binding OperationSuccessFieldTypes}"
+                                SelectedValue="{Binding OperationSuccess}"
+                                SelectedValuePath="Value">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Converter={StaticResource operationSuccessConverter}}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <ContentControl Name="contentOperationSuccess" Content="{Binding OperationSuccess}" />
+                        </StackPanel>
+                    </HeaderedContentControl>
+                </StackPanel>
+            </GroupBox>
+
+        </StackPanel>
+    </DockPanel>
+</Window>

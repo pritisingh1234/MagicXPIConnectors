@@ -1,0 +1,140 @@
+﻿<Window x:Class="MagicSoftware.MQTT.Trigger.MQTTTriggerView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="{x:Static local:MQTTResourceManager.TriggerWindowTitle}"
+        Height="350"
+        Width="500"
+        WindowStartupLocation="CenterScreen"
+        Background="White"
+        ResizeMode="NoResize"
+        xmlns:local="clr-namespace:MagicSoftware.MQTT"
+        xmlns:trigger="clr-namespace:MagicSoftware.MQTT.Trigger"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:helper="clr-namespace:MagicSoftware.MQTT.Helpers">
+    <Window.Resources>
+       
+      <ResourceDictionary>
+         <ResourceDictionary.MergedDictionaries>
+            <ResourceDictionary Source="pack://application:,,,/MQTT;component/Themes/Generic.xaml"></ResourceDictionary>
+         </ResourceDictionary.MergedDictionaries>
+         
+          <ObjectDataProvider x:Key="qosEnum"
+                             MethodName="GetDisplayNames"
+                             ObjectType="{x:Type helper:EnumHelper}">
+            <ObjectDataProvider.MethodParameters>
+               <x:TypeExtension TypeName="local:QosEnum" />
+            </ObjectDataProvider.MethodParameters>
+         </ObjectDataProvider>
+
+
+
+        <DataTemplate DataType="{x:Type trigger:MessagePayloadVariableFieldViewModel}">
+            <StackPanel Orientation="Horizontal">
+                <Button Style="{StaticResource FieldButtonStyle}"
+                       Command="{x:Static local:Commands.PromptCommand}"
+                       CommandParameter="MessagePayload">...</Button>
+                <TextBlock Text="{Binding FieldVariable}"
+                          Margin="5,0,0,0" />
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type trigger:MessageTopicVariableFieldViewModel}">
+            <StackPanel Orientation="Horizontal">
+                <Button Style="{StaticResource FieldButtonStyle}"
+                       Command="{x:Static local:Commands.PromptCommand}"
+                       CommandParameter="MessageTopic">...</Button>
+                <TextBlock Text="{Binding FieldVariable}"
+                          Margin="5,0,0,0" />
+            </StackPanel>
+        </DataTemplate>
+        </ResourceDictionary>
+        
+    </Window.Resources>
+
+    <DockPanel>
+        <StackPanel Orientation="Horizontal"
+                  HorizontalAlignment="Right"
+                  DockPanel.Dock="Bottom">
+            <Button Margin="2"
+                 Name="OK"
+                 Click="OK_Click"
+                 Visibility="{Binding IsDesign}"
+                 Content="{x:Static local:MQTTResourceManager.OK}"   
+                 Style="{StaticResource DialogButtonStyle}"/>
+            <Button Margin="2"
+                 Name="Cancel"
+                 Content="{x:Static local:MQTTResourceManager.Cancel}"   
+                 Click="Cancel_Click"
+                 Style="{StaticResource DialogButtonStyle}"/>
+        </StackPanel>
+
+        <Grid Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <GroupBox Header="{x:Static local:MQTTResourceManager.HdrConnection}" Grid.Row="0">
+                <StackPanel>
+                    <HeaderedContentControl Header="{x:Static local:MQTTResourceManager.LblResourceName}">
+                        <StackPanel>
+                            <TextBlock Text="{Binding ResourceName}" />
+                        </StackPanel>
+                    </HeaderedContentControl>
+                </StackPanel>
+            </GroupBox>
+
+            <DockPanel Grid.Row="1">
+                
+                <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Left">
+                    <Button Margin="2" Name="New" Click="New_Click" Style="{StaticResource DialogButtonStyle}" Content="{x:Static local:MQTTResourceManager.BtnNew}"/>
+                    <Button Margin="2" Name="Delete" Click="Delete_Click" Style="{StaticResource DialogButtonStyle}" Content="{x:Static local:MQTTResourceManager.BtnDelete}" />
+                </StackPanel>
+
+                <DataGrid AutoGenerateColumns="False" VerticalAlignment="Stretch" 
+                          Name="TopicsTable" CanUserResizeColumns="False" 
+                    RowHeaderWidth="0" CanUserAddRows="False" IsReadOnly="False" 
+                          ItemsSource="{Binding Topics}"
+                          SelectionMode="Single"
+                          SelectedItem="{Binding SelectedLine}">
+                    
+                    <DataGrid.Columns>
+                        <DataGridTextColumn IsReadOnly="True" Binding="{Binding Index}" Width="25" Header="#"></DataGridTextColumn>
+                        <DataGridTextColumn Binding="{Binding Topic, ValidatesOnDataErrors=True}" Width="*" Header="{x:Static local:MQTTResourceManager.HdrTopic}" >
+                            <DataGridTextColumn.EditingElementStyle>
+                                <Style TargetType="TextBox">
+                                    <Setter Property="MaxLength" Value="1000"/>
+                                </Style>
+                            </DataGridTextColumn.EditingElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridComboBoxColumn SelectedValueBinding="{Binding QoS}" Header="{x:Static local:MQTTResourceManager.HdrQoS}" Width="70" 
+                                                SelectedValuePath="Item2"
+                                                DisplayMemberPath="Item1"
+                                                ItemsSource="{Binding Source={StaticResource qosEnum}}">
+                        </DataGridComboBoxColumn>
+                    </DataGrid.Columns>
+                    
+                </DataGrid>
+                
+            </DockPanel>
+
+            <GroupBox Header="{x:Static local:MQTTResourceManager.HdrResultOptions}" Grid.Row="2">
+                <StackPanel>
+                    <HeaderedContentControl Header="{x:Static local:MQTTResourceManager.HdrMessagePayload}">
+                        <StackPanel Orientation="Horizontal">
+                            <ContentControl Name="btnMessagePayload" Content="{Binding MessagePayload}"></ContentControl>
+                        </StackPanel>
+                    </HeaderedContentControl>
+
+                    <HeaderedContentControl Header="{x:Static local:MQTTResourceManager.HdrMessageTopic}">
+                        <StackPanel Orientation="Horizontal">
+                            <ContentControl Name="btnMessageTopic" Content="{Binding MessageTopic}"></ContentControl>
+                        </StackPanel>
+                    </HeaderedContentControl>
+                </StackPanel>
+            </GroupBox>
+
+        </Grid>
+    </DockPanel>
+</Window>
